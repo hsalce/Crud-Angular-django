@@ -1,0 +1,156 @@
+<div class="card border-secondary " style="max-width: 60rem" id="card2">
+  <div class="card-header">crud</div>
+  <div class="card-body">
+    <h4 class="card-title">Opciones CRUD</h4>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#exampleModal"
+      (click)="variable = 0; titleModal = 'Agregar nuevo libro'"
+    >
+      agregar
+    </button>
+
+    <hr />
+    <table class="table table-hover">
+      <Thead>
+        
+        <th>libro</th>
+        <th>Autor</th>
+        <th>Editorial</th>
+        <th></th>
+      </Thead>
+      <tbody>
+        <tr *ngFor="let book of listLibro">
+          <td>{{ book.name }}</td>
+          <td>{{ book.auth }}</td>
+          <td>{{ book.editorial }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-success"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              (click)="getBook(book.id)"
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="deleteBook(book.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ titleModal }}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="variable == 1; else elseTemplate">
+          <label for="nmLibro"><strong>Libro</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="nmLibro"
+            name="nmLibro"
+            placeholder="Libro"
+            [(ngModel)]="book.name"
+            required
+          />
+          <label for="auth"><strong>Autor</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="auth"
+            name="auth"
+            placeholder="Autor"
+            [(ngModel)]="book.auth"
+            value="author"
+            required
+          />
+          <label for="edito"><strong>Editorial</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="edito"
+            name="edito"
+            placeholder="Editorial"
+            [(ngModel)]="book.editorial"
+            required
+          />
+        </ng-container>
+        <ng-template #elseTemplate>
+          <label for="nmLibro"><strong>Libro</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="nmLibro"
+            name="nmLibro"
+            placeholder="Libro"
+            [(ngModel)]="name"
+          />
+          <label for="auth"><strong>Autor</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="auth"
+            name="auth"
+            placeholder="Autor"
+            [(ngModel)]="auth"
+            value="author"
+          />
+          <label for="edito"><strong>Editorial</strong></label>
+          <input
+            class="form-control"
+            type="text"
+            id="edito"
+            name="edito"
+            placeholder="Editorial"
+            [(ngModel)]="editorial"
+          />
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <span *ngIf="variable == 1">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="editBook()"
+            data-dismiss="modal"
+          >
+            Guardar
+          </button>
+        </span>
+        <span *ngIf="variable == 0">
+          <button type="submit" class="btn btn-success" (click)="addBook()">
+            Guardar
+          </button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal">
+            Cancelar
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
